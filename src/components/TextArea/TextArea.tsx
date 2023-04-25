@@ -3,7 +3,7 @@ import { createGIF } from "gifshot";
 import html2canvas from "html2canvas";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import theme from "prism-react-renderer/themes/nightOwl";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAutoTyping } from "../../hooks/useAutoTyping";
 import styles from "./TextArea.module.scss";
 
@@ -12,13 +12,14 @@ let images: any = [];
 
 function TextArea({ text, refrence }: Props) {
   const [state]: any = useAutoTyping(text, 2, refrence);
-
+  const [loading, setIsloading] = useState(false);
   const func = () => {
     console.log(refrence.current);
     images.push(html2canvas(refrence.current).then((a) => a.toDataURL()));
   };
 
   const convertToGif = async () => {
+    setIsloading(true);
     const sequence = await Promise.all(images);
     for (let i = 0; i < 10; i++) {
       sequence.push(sequence[sequence.length - 1]);
@@ -39,6 +40,7 @@ function TextArea({ text, refrence }: Props) {
         a.href = obj.image;
         a.download = "a.gif";
         a.click();
+        setIsloading(false);
       }
     });
   };
@@ -51,6 +53,11 @@ function TextArea({ text, refrence }: Props) {
   }, [text]);
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
+      {loading && (
+        <div className={styles.loaderConatiner}>
+          <div className={styles.loader}></div>
+        </div>
+      )}
       <button className={styles.downloadButton} onClick={convertToGif}>
         Download
       </button>

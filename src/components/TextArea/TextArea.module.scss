@@ -16,3 +16,29 @@
     cursor: pointer;
   }
 }
+
+.loaderConatiner {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  background-color: rgba($color: #000000, $alpha: 0.75);
+
+  .loader {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 2rem;
+    border: thick solid #fff;
+    border-left: thick solid transparent;
+    animation: load 1s normal 0s infinite;
+    @keyframes load {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+}
