@@ -1,3 +1,4 @@
+///@ts-ignore
 import { createGIF } from "gifshot";
 import html2canvas from "html2canvas";
 import Highlight, { defaultProps } from "prism-react-renderer";
